@@ -1,0 +1,107 @@
+=== DANH SÁCH GIÁO VIÊN VÀ NHÂN VIÊN ===
+
+Họ và tên                | Ngày sinh  | Giới tính | Môn dạy    | Chức vụ
+----------------------------------------------------------------------------------
+Nguyễn Trung Kiên        | 07/10/1982 | Nam       | Toán       | Hiệu trưởng
+Nguyễn Hồng Thái         | 13/07/1968 | Nam       | Ngữ văn    | Phó hiệu trưởng
+Nguyễn Thị Mai Liên      | 22/03/1977 | Nữ        | Toán       | Phó hiệu trưởng
+Nguyễn Hữu Quyết         | 13/12/1967 | Nam       | Toán       | Tổ trưởng chuyên môn
+Nguyễn Thị Thúy Dung     | 25/12/1978 | Nữ        | Toán       | Giáo viên
+Đăng Thị Thủy            | 25/11/1978 | Nữ        | Toán       | Giáo viên
+Nguyễn Viết Thị Ánh      | 04/06/1983 | Nữ        | Toán       | Giáo viên
+Nguyễn Thị Thanh         | 11/02/1981 | Nữ        | Toán       | Giáo viên
+Nguyễn Thị Hoàng Yến     | 09/06/1976 | Nữ        | Toán       | Giáo viên
+Nguyễn Thị Khánh         | 02/09/1972 | Nữ        | Toán       | Giáo viên
+Hà Thành                 | 01/06/1980 | Nữ        | Toán       | Giáo viên
+Phan Thị Thu Hà          | 12/09/1978 | Nữ        | Toán       | Giáo viên
+Nguyễn Thị Huyền         | 25/04/1990 | Nữ        | Toán       | Giáo viên
+Trần Thị Hồng Minh       | 13/04/1985 | Nữ        | Toán       | Tổ phó chuyên môn
+Nguyễn Thị Quỳnh         | 15/02/1991 | Nữ        | Toán       | Giáo viên
+Nguyễn Hoài Ly           | 13/03/2000 | Nữ        | Toán       | Giáo viên
+Nguyễn Phương Ly         | 04/09/2004 | Nữ        | Toán       | Giáo viên
+Nguyễn Quang Tuấn        | 14/02/1995 | Nam       | Toán       | Giáo viên
+Triệu Thị Lệ Na          | 10/10/1981 | Nữ        | Vật lý     | Tổ phó chuyên môn
+Nguyễn Thị Ngọc Ánh      | 15/08/1984 | Nữ        | Vật lý     | Giáo viên
+Nguyễn Thị Thanh Huyền   | 06/08/1982 | Nữ        | Vật lý     | Giáo viên
+Nguyễn Minh Thành        | 25/08/1985 | Nam       | Vật lý     | Giáo viên
+Dương Thị Bích Ngọc      | 15/02/1989 | Nữ        | Vật lý     | Giáo viên
+Đỗ Thị Ngọc Hà           | 18/11/1986 | Nữ        | Vật lý     | Giáo viên
+Phạm Thị Anh Phương      | 16/04/1974 | Nữ        | Vật lý     | Giáo viên
+Hoàng Nhật Linh          | 30/12/2003 | Nữ        | Vật lý     | Giáo viên
+Nguyễn Đăng Hành         | 30/09/1998 | Nam       | Vật lý     | Bí thư đoàn
+Nguyễn Thị Thanh Hương   | 12/10/1976 | Nữ        | Tin        | Giáo viên
+Lý Minh Chi              | 24/09/1981 | Nữ        | Tin        | TKHĐ
+Phạm Thị An              | 01/12/1983 | Nữ        | Tin        | Giáo viên
+Đức Thị Nhung            | 18/09/1987 | Nữ        | Tin        | Giáo viên
+Vũ Thị Lựu               | 08/01/1972 | Nữ        | Hóa học    | Giáo viên
+Phí Thị Phương           | 21/11/1983 | Nữ        | Hóa học    | Giáo viên
+Bùi Thị Vân Hồng         | 22/02/1975 | Nữ        | Hóa học    | Giáo viên
+Nguyễn Thị An Chung      | 30/08/1983 | Nữ        | Hóa học    | Giáo viên
+Phùng Thị Thanh Mai      | 24/10/1983 | Nữ        | Hóa học    | Giáo viên
+Lê Đức Tùng              | 01/04/1986 | Nam       | Hóa học    | TKHĐ
+Nguyễn Thế Minh          | 15/06/1981 | Nam       | Hóa học    | Giáo viên
+Nguyễn Trung Đông        | 05/12/1973 | Nam       | Thể dục    | Giáo viên
+Nguyễn Tiến Dũng         | 29/10/1972 | Nam       | Thể dục    | Tổ phó chuyên môn
+Hoàng Thị Lê             | 20/01/1983 | Nữ        | Thể dục    | Giáo viên
+Nguyễn Thị Oanh          | 26/10/1985 | Nữ        | Thể dục    | Giáo viên
+Hoàng Kim Anh            | 20/02/1979 | Nam       | GDQP-AN    | Giáo viên
+Trương Thị Hương         | 28/01/1987 | Nữ        | GDQP-AN    | Giáo viên
+Lê Thị Lợi               | 16/12/1978 | Nữ        | Sinh học   | Tổ trưởng chuyên môn
+Nguyễn Thị Bích Thủy     | 09/02/1977 | Nữ        | Sinh học   | Giáo viên
+Doãn Thị Minh Nguyệt     | 02/01/1979 | Nữ        | Sinh học   | Giáo viên
+Nguyễn Phương Hoa        | 24/10/1996 | Nữ        | Sinh học   | Giáo viên
+Nguyễn Thị Lan Hương     | 05/01/1979 | Nữ        | Công nghệ  | Giáo viên
+Nguyễn Viết Thị Thúy     | 09/10/1980 | Nữ        | Công nghệ  | Giáo viên
+Nguyễn Thị Hồng Hảo      | 13/08/1980 | Nữ        | Công nghệ  | Giáo viên
+Ngô Thị Hồng Cẩm         | 22/03/1976 | Nữ        | Công nghệ  | Giáo viên
+Ngô Thị Ngọc Ngà         | 06/03/1982 | Nữ        | Công nghệ  | Giáo viên
+Nguyễn Thị Mỹ Hạnh       | 18/04/1974 | Nữ        | Ngữ văn    | Giáo viên
+Nguyễn Thị Vân           | 04/05/1975 | Nữ        | Ngữ văn    | Giáo viên
+Nguyễn Thị Biên          | 13/01/1975 | Nữ        | Ngữ văn    | Giáo viên
+Nguyễn Thị Thu Hằng      | 15/11/1977 | Nữ        | Ngữ văn    | Giáo viên
+Nguyễn Hoài Hương        | 15/06/1981 | Nữ        | Ngữ văn    | Tổ trưởng chuyên môn
+Vũ Thúy Hằng             | 23/04/1977 | Nữ        | Ngữ văn    | Giáo viên
+Nguyễn Thị Tuyết         | 22/11/1978 | Nữ        | Ngữ văn    | Giáo viên
+Trần Tiến Dũng           | 17/10/1973 | Nam       | Ngữ văn    | Giáo viên
+Nguyễn Hoài Thu          | 25/10/1977 | Nữ        | Ngữ văn    | Giáo viên
+Lê Thị Hạnh              | 15/07/1992 | Nữ        | Ngữ văn    | Giáo viên
+Nguyễn Thị Mai           | 04/09/2002 | Nữ        | Ngữ văn    | Giáo viên
+Lý Thị Lan               | 27/11/1977 | Nữ        | Địa lý     | Giáo viên
+Nguyễn Chí Huân          | 03/04/1972 | Nam       | Địa lý     | Giáo viên
+Ngô Thị Tố Nga           | 02/06/1978 | Nữ        | Địa lý     | Giáo viên
+Nguyễn Thị Liên          | 01/03/1992 | Nữ        | Địa lý     | Giáo viên
+Trần Thị Tuyết           | 08/08/1997 | Nữ        | Địa lý     | Giáo viên
+Nguyễn Thị Thúy          | 08/07/1975 | Nữ        | Lịch sử    | Giáo viên
+Phạm Thị Thu Huyền       | 03/03/1976 | Nữ        | Lịch sử    | Tổ trưởng chuyên môn
+Phạm Thị Mỹ Phương       | 13/03/1980 | Nữ        | Lịch sử    | Giáo viên
+Nguyễn Thị Phương Thảo   | 24/09/1976 | Nữ        | Lịch sử    | Giáo viên
+Nguyễn Thị Thanh Huyền   | 11/02/2002 | Nữ        | Lịch sử    | Giáo viên
+Nguyễn Quốc Toàn         | 17/12/1967 | Nam       | GDKT-PL    | Giáo viên
+Hoàng Thị Tuyến          | 10/04/1976 | Nữ        | GDKT-PL    | Tổ phó chuyên môn
+Nguyễn Thị Dịu           | 15/07/1977 | Nữ        | GDKT-PL    | Giáo viên
+Nguyễn Thị Lợi           | 18/10/1982 | Nữ        | GDKT-PL    | Giáo viên
+Phan Tiến                | 26/04/1973 | Nam       | Tiếng anh  | Giáo viên
+Nguyễn Chí Thành         | 20/08/1969 | Nam       | Tiếng anh  | Giáo viên
+Từ Thị Thu Phương        | 29/04/1976 | Nữ        | Tiếng anh  | Giáo viên
+Tạ Thị Phương            | 01/08/1976 | Nữ        | Tiếng anh  | Giáo viên
+Lương Thị Kim Thanh      | 18/02/1971 | Nữ        | Tiếng anh  | Giáo viên
+Nguyễn Thị Vân           | 20/05/1976 | Nữ        | Tiếng anh  | Giáo viên
+Nguyễn Thị Nga           | 05/02/1979 | Nữ        | Tiếng anh  | Giáo viên
+Nguyễn Thị Mỹ Bình       | 03/09/1973 | Nữ        | Tiếng anh  | Giáo viên
+Nguyễn Thị Quế Hương     | 22/07/1985 | Nữ        | Tiếng anh  | Tổ phó chuyên môn
+Nguyễn Thu Hiền          | 05/11/1978 | Nữ        | Tiếng anh  | Tổ trưởng chuyên môn
+Đàm Thị Ngọc Ánh         | 31/03/2003 | Nữ        | Tiếng anh  | Giáo viên
+Trần Thị Mai Hương       | 10/12/2003 | Nữ        | Mỹ thuật   | Giáo viên
+Bùi Thị Hoa              | 06/04/1995 | Nữ        | Âm nhạc    | Giáo viên
+Cấn Ngọc Đoàn            | 25/05/2001 | Nam       | Thể dục    | Giáo viên
+Nguyễn Thị Nhung         | 20/07/1974 | Nữ        | Thủ quỹ    | TTVP
+Nguyễn Thị Vân           | 29/11/1984 | Nữ        | Kế toán    | Nhân viên
+Nguyễn Thị Lan Anh       | 09/12/1980 | Nữ        | Thư viện   | Nhân viên
+Vũ Thị Phượng            | 21/09/1985 | Nữ        | Thiết bị   | Nhân viên
+Trần Thị Khuyến          | 09/09/1983 | Nữ        | Văn thư    | Nhân viên
+Nguyễn Thị Thủy          | 10/07/1984 | Nữ        | Thiết bị   | Nhân viên
+Trần Quang Mạnh          | 15/08/1974 | Nam       | Bảo vệ     | Nhân viên
+Nguyễn Bá Mạnh           | 25/10/1078 | Nam       | Bảo vệ     | Nhân viên
+Nguyễn Thị Thủy Vân      | 9/9/1992   | Nữ        | TVTL HĐ    | Nhân viên
+Nguyễn Khánh Ngọc        | 22/12/2003 | Nữ        | Y tế       | Nhân viên
+Nguyễn Thùy Linh         | 21/10/1995 | Nữ        | Phục vụ    | Nhân viên

@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trợ lý ảo Trường Học</title>
+    <!-- Tích hợp thư viện Marked để xử lý Markdown -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style> 
+        .tool-row { display: flex; gap: 10px; margin: 10px 20px 0; }
+        .tool-row .map-button { margin: 0; width: auto; flex: 1; }
+
+        .chat-images { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; margin-top: 10px; }
+        .chat-images figure, .gallery-grid figure { margin: 0; }
+        .chat-images img, .gallery-grid img {
+            width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;
+            border-radius: 10px; border: 1px solid var(--border-color); cursor: zoom-in;
+        }
+        .chat-images figcaption, .gallery-grid figcaption { font-size: 11px; color: var(--text-secondary); margin-top: 3px; }
+
+        .gallery-body { flex: 1; overflow: auto; padding: 16px; background: #f1f5f9; }
+        .gallery-section h4 { margin: 14px 0 8px; font-size: 14px; }
+        .gallery-section:first-child h4 { margin-top: 0; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+        :root {
+            --bg-main: #f8fafc;
+            --card-bg: #ffffff;
+            --primary-color: #2563eb;
+            --primary-hover: #1d4ed8;
+            --text-main: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+            --bot-bubble-bg: #f1f5f9;
+        }
+
+        /* Toàn bộ tài liệu sử dụng border-box tránh vỡ layout */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+
+            /* THÊM CÁC DÒNG NÀY ĐỂ ĐỔI ẢNH NỀN */
+            background-image: url('snh.jpg'); 
+            background-size: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+
+        .chat-container {
+            width: 100%;
+            max-width: 480px;
+            height: 85vh; 
+            max-height: 750px;
+            min-height: 450px;
+            
+            /* THAY ĐỔI TẠI ĐÂY: Nền trong suốt 85% và bo viền mịn */
+            background: rgba(255, 255, 255, 0); 
+            backdrop-filter: blur(12px); 
+            -webkit-backdrop-filter: blur(12px); /* Hỗ trợ trình duyệt Safari */
+            
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8); /* Bóng đổ mềm hơn */
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(226, 232, 240, 0.1);
+            overflow: hidden;
+        }
+
+        .chat-header {
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.85); /* Header trong suốt nhẹ */
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-shrink: 0; 
+        }
+
+        .school-avatar {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-color);
+            background-color: #e2e8f0;
+        }
+
+        .header-info h3 {
+            font-size: 16px;
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        .header-info p {
+            margin-top: 3px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .chat-box {
+            flex: 1; 
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            background-color: transparent; /* ĐỂ TRONG SUỐT để nhìn xuyên qua lớp kính mờ */
+            scroll-behavior: smooth;
+        }
+
+        /* Tùy chỉnh thanh cuộn đẹp hơn */
+        .chat-box::-webkit-scrollbar {
+            width: 6px;
+        }
+        .chat-box::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .chat-box::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+
+        .message {
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 16px;
+            font-size: 14px;
+            line-height: 1.5;
+            word-wrap: break-word;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+
+        /* Định dạng các thẻ HTML sinh ra từ Markdown bên trong bong bóng chat bot */
+        .message p { margin-bottom: 8px; }
+        .message p:last-child { margin-bottom: 0; }
+        .message ul, .message ol { margin: 6px 0; padding-left: 20px; }
+
+        .user {
+            align-self: flex-end;
+            background: var(--primary-color);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .bot {
+            align-self: flex-start;
+            background: var(--bot-bubble-bg);
+            color: var(--text-main);
+            border-bottom-left-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        .citations {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed var(--border-color);
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        .citations summary {
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--primary-color);
+            outline: none;
+        }
+        .citation-item {
+            margin-top: 6px;
+            padding: 8px;
+            background: #ffffff;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+        .citation-item .src { font-weight: 600; color: var(--text-main); }
+        .model-tag {
+            margin-top: 6px;
+            font-style: italic;
+            font-size: 11px;
+        }
+
+        .input-area {
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.9); /* Vùng nhập liệu trong suốt nhẹ */
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-shrink: 0; 
+        }
+
+        input {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: #f8fafc;
+            color: var(--text-main);
+            outline: none;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        input:focus {
+            border-color: var(--primary-color);
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        input:disabled, button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        button {
+            padding: 12px 20px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        button:hover:not(:disabled) {
+            background: var(--primary-hover);
+        }
+
+        button:active:not(:disabled) {
+            transform: scale(0.98);
+        }
+
+        .typing {
+            display: flex;
+            gap: 4px;
+            padding: 12px 16px;
+            background: var(--bot-bubble-bg);
+            border-radius: 16px;
+            border-bottom-left-radius: 4px;
+            border: 1px solid var(--border-color);
+            align-self: flex-start;
+        }
+        .typing span {
+            width: 6px;
+            height: 6px;
+            background: var(--text-secondary);
+            border-radius: 50%;
+            animation: blink 1.4s infinite both;
+        }
+        .typing span:nth-child(2) { animation-delay: .2s; }
+        .typing span:nth-child(3) { animation-delay: .4s; }
+        @keyframes blink {
+            0% { opacity: .2; }
+            20% { opacity: 1; }
+            100% { opacity: .2; }
+        }
+
+
+        /* ===== SƠ ĐỒ TRƯỜNG ===== */
+        .map-button {
+            margin: 10px 20px 0;
+            width: calc(100% - 40px);
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--primary-color);
+            border: 1px solid var(--border-color);
+            padding: 10px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .map-button:hover {
+            background: #eff6ff;
+            border-color: var(--primary-color);
+            transform: translateY(-1px);
+        }
+
+        .map-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: rgba(15, 23, 42, 0.78);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .map-modal.active {
+            display: flex;
+        }
+
+        .map-modal-content {
+            width: min(1100px, 96vw);
+            height: min(88vh, 850px);
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+        }
+
+        .map-modal-header {
+            min-height: 58px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            border-bottom: 1px solid var(--border-color);
+            background: #ffffff;
+        }
+
+        .map-modal-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .map-controls {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .map-control {
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8fafc;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 17px;
+        }
+
+        .map-control:hover {
+            background: #eff6ff;
+            color: var(--primary-color);
+        }
+
+        .map-download {
+            width: auto;
+            padding: 0 12px;
+            font-size: 13px;
+        }
+
+        .map-close {
+            background: #fee2e2;
+            color: #b91c1c;
+            border: none;
+        }
+
+        .map-close:hover {
+            background: #fecaca;
+            color: #991b1b;
+        }
+
+        .map-viewer {
+            flex: 1;
+            overflow: auto;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            cursor: grab;
+        }
+
+        .map-viewer:active {
+            cursor: grabbing;
+        }
+
+        .map-image {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            transform-origin: center center;
+            transition: transform 0.15s ease;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        .map-hint {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-secondary);
+            padding: 8px 12px;
+            border-top: 1px solid var(--border-color);
+            background: #ffffff;
+        }
+
+
+        /* Tối ưu hóa hiển thị trên thiết bị di động nhỏ dưới 480px */
+        @media (max-width: 480px) {
+            body { background-color: var(--card-bg); }
+            .chat-container {
+                height: 100vh;
+                max-height: 100vh;
+                min-height: 100vh;
+                border: none;
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="chat-container">
+        <div class="chat-header">
+            <img src="anh2.jpg" alt="Ảnh trường học" class="school-avatar" onerror="this.style.display='none'">
+            <div class="header-info">
+                <h3>Trợ lý ảo Trường Học</h3>
+                <p>Luôn sẵn sàng giải đáp thắc mắc của bạn</p>
+            </div>
+        </div>
+
+        <div class="tool-row">
+            <button class="map-button" onclick="openMap()">🗺️ Sơ đồ trường</button>
+            <button class="map-button" onclick="openGallery()">🖼️ Thư viện ảnh</button>
+        </div>
+
+        <!-- Modal thư viện ảnh -->
+        <div id="galleryModal" class="map-modal" onclick="if (event.target === this) closeGallery()">
+            <div class="map-modal-content">
+                <div class="map-modal-header">
+                    <div class="map-modal-title">🖼️ Thư viện ảnh</div>
+                    <div class="map-controls">
+                        <button class="map-control map-close" onclick="closeGallery()" title="Đóng">✕</button>
+                    </div>
+                </div>
+                <div class="gallery-body" id="galleryBody">Đang tải...</div>
+            </div>
+        </div>
+
+        <!-- Xem 1 ảnh phóng to -->
+        <div id="imgModal" class="map-modal" onclick="if (event.target === this) closeImage()">
+            <div class="map-modal-content">
+                <div class="map-modal-header">
+                    <div class="map-modal-title" id="imgModalTitle"></div>
+                    <div class="map-controls">
+                        <button class="map-control map-close" onclick="closeImage()" title="Đóng">✕</button>
+                    </div>
+                </div>
+                <div class="map-viewer"><img id="imgModalImg" class="map-image" src="" alt=""></div>
+            </div>
+        </div>
+
+        <div id="chatBox" class="chat-box">
+            <div class="message bot">Chào bạn! Tôi có thể giúp gì cho bạn về thông tin của nhà trường hôm nay?</div>
+        </div>
+
+
+        <!-- Modal sơ đồ trường -->
+        <div id="mapModal" class="map-modal" onclick="handleMapBackdropClick(event)">
+            <div class="map-modal-content">
+                <div class="map-modal-header">
+                    <div class="map-modal-title">🗺️ Sơ đồ trường</div>
+                    <div class="map-controls">
+                        <button class="map-control" onclick="zoomMap(-0.2)" title="Thu nhỏ">−</button>
+                        <button class="map-control" onclick="resetMap()" title="Đặt lại kích thước">↺</button>
+                        <button class="map-control" onclick="zoomMap(0.2)" title="Phóng to">+</button>
+                        <button class="map-control map-download" onclick="downloadMap()" title="Tải ảnh về">⬇ Tải ảnh</button>
+                        <button class="map-control map-close" onclick="closeMap()" title="Đóng">✕</button>
+                    </div>
+                </div>
+
+                <div class="map-viewer" id="mapViewer">
+                    <img
+                        id="schoolMap"
+                        class="map-image"
+                        src="so_do_truong.jpg"
+                        alt="Sơ đồ trường"
+                    >
+                </div>
+
+                <div class="map-hint">
+                    Có thể dùng nút +/− để phóng to, hoặc cuộn để xem chi tiết.
+                </div>
+            </div>
+        </div>
+
+        <div class="input-area">
+            <input type="text" id="queryInput" placeholder="Nhập câu hỏi của bạn tại đây..." onkeypress="handleKeyPress(event)">
+            <button id="sendBtn" onclick="sendMessage()">Gửi</button>
+        </div>
+    </div>
+
+    <script>
+
+    function escapeHtml(s) {
+        return String(s || "").replace(/[&<>"']/g, c =>
+            ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    }
+
+    function renderImages(images) {
+        if (!images || images.length === 0) return "";
+        return '<div class="chat-images">' + images.map(i => `
+            <figure>
+                <img src="${i.url}" alt="${escapeHtml(i.title)}" data-full="${i.url}" loading="lazy" onerror="console.warn('Không tải được ảnh:', this.src)">
+                <figcaption>${escapeHtml(i.title)}</figcaption>
+            </figure>`).join("") + "</div>";
+    }
+
+    // Một listener cho mọi ảnh (trong chat lẫn thư viện)
+    document.addEventListener("click", e => {
+        const el = e.target.closest("[data-full]");
+        if (el) openImage(el.dataset.full, el.alt);
+    });
+
+    function openImage(url, title) {
+        document.getElementById("imgModalImg").src = url;
+        document.getElementById("imgModalTitle").textContent = title || "";
+        document.getElementById("imgModal").classList.add("active");
+    }
+    function closeImage() { document.getElementById("imgModal").classList.remove("active"); }
+
+    async function openGallery() {
+        const body = document.getElementById("galleryBody");
+        document.getElementById("galleryModal").classList.add("active");
+        if (body.dataset.loaded) return;
+        try {
+            const res = await fetch("/api/images");
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const groups = await res.json();
+            console.log("[gallery] /api/images ->", groups);
+            if (!Array.isArray(groups) || groups.length === 0) {
+                body.textContent = "Chưa có ảnh nào được nạp (kiểm tra manifest.json và log khởi động của server).";
+                return;
+            }
+            body.innerHTML = groups.map(g => `
+            <section class="gallery-section">
+                <h4>${escapeHtml(g.label)}</h4>
+                <div class="gallery-grid">
+                    ${g.images.map(i => `
+                        <figure>
+                            <img src="${i.url}" alt="${escapeHtml(i.title)}" data-full="${i.url}" loading="lazy" onerror="console.warn('Không tải được ảnh:', this.src)">
+                            <figcaption>${escapeHtml(i.title)}</figcaption>
+                        </figure>`).join("")}
+                </div>
+            </section>`).join("");
+            body.dataset.loaded = "1";
+        } catch (err) {
+            console.error("[gallery] lỗi:", err);
+            body.textContent = `Không tải được thư viện ảnh (${err.message}).`;
+        }
+    }
+    function closeGallery() { document.getElementById("galleryModal").classList.remove("active"); }
+    marked.setOptions({ breaks: true });
+
+    function handleKeyPress(event) {
+        if (event.key === "Enter") {
+            sendMessage();
+        }
+    }
+
+    function scrollToBottom() {
+        const chatBox = document.getElementById("chatBox");
+        setTimeout(() => {
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }, 50);
+    }
+
+    function renderCitations(sources, provider, model, latencyMs) {
+        if (!sources || sources.length === 0) return "";
+
+        let html = '<details class="citations"><summary>📚 Xem nguồn trích dẫn</summary>';
+
+        sources.forEach(s => {
+            html += `
+                <div class="citation-item">
+                    <div class="src">
+                        📄 ${s.source || "Nguồn"} — độ liên quan: ${s.distance || "N/A"}
+                    </div>
+                    <div>"${s.snippet || ""}..."</div>
+                </div>
+            `;
+        });
+
+        if (provider && provider !== "none") {
+            html += `
+                <div class="model-tag">
+                    ⚙ ${provider} (${model || "LLM"}) — ${latencyMs || 0} ms
+                </div>
+            `;
+        }
+
+        html += "</details>";
+        return html;
+    }
+
+
+    // ===== SƠ ĐỒ TRƯỜNG =====
+    let mapScale = 1;
+
+    function openMap() {
+        const modal = document.getElementById("mapModal");
+        modal.classList.add("active");
+        document.body.style.overflow = "hidden";
+        resetMap();
+    }
+
+    function closeMap() {
+        const modal = document.getElementById("mapModal");
+        modal.classList.remove("active");
+        document.body.style.overflow = "";
+    }
+
+    function handleMapBackdropClick(event) {
+        if (event.target === document.getElementById("mapModal")) {
+            closeMap();
+        }
+    }
+
+    function zoomMap(amount) {
+        mapScale = Math.min(3, Math.max(0.5, mapScale + amount));
+        document.getElementById("schoolMap").style.transform =
+            `scale(${mapScale})`;
+    }
+
+    function resetMap() {
+        mapScale = 1;
+        const image = document.getElementById("schoolMap");
+        if (image) image.style.transform = "scale(1)";
+    }
+
+    function downloadMap() {
+        const link = document.createElement("a");
+        link.href = "so_do_truong.jpg";
+        link.download = "so_do_truong.jpg";
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    }
+
+    document.addEventListener("keydown", function(event) {
+        if (event.key === "Escape") {
+            closeMap();
+            closeGallery();
+            closeImage();
+        }
+    });
+
+    async function sendMessage() {
+        const inputField = document.getElementById("queryInput");
+        const chatBox = document.getElementById("chatBox");
+        const sendBtn = document.getElementById("sendBtn");
+
+        const query = inputField.value.trim();
+
+        if (!query) return;
+
+        // Hiển thị câu hỏi của người dùng
+        const userMsgDiv = document.createElement("div");
+        userMsgDiv.className = "message user";
+        userMsgDiv.textContent = query;
+        chatBox.appendChild(userMsgDiv);
+
+        // Xóa ô nhập và khóa giao diện
+        inputField.value = "";
+        inputField.disabled = true;
+        sendBtn.disabled = true;
+
+        scrollToBottom();
+
+        // Hiển thị hiệu ứng đang trả lời
+        const typingDiv = document.createElement("div");
+        typingDiv.className = "typing";
+        typingDiv.id = "typingIndicator";
+
+        typingDiv.innerHTML = `
+            <span></span>
+            <span></span>
+            <span></span>
+        `;
+
+        chatBox.appendChild(typingDiv);
+        scrollToBottom();
+
+        try {
+            const response = await fetch(
+                "/chat",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        query: query
+                    })
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+
+            const data = await response.json();
+
+            const markdownText =
+                data.answer || "Không nhận được phản hồi từ hệ thống.";
+
+            const sources = data.sources || [];
+            const provider = data.provider || "none";
+            const model = data.model || "";
+            const latencyMs = data.latency_ms || 0;
+
+            typingDiv.remove();
+
+            // Tạo bong bóng trả lời
+            const botMsgDiv = document.createElement("div");
+            botMsgDiv.className = "message bot";
+            const imagesHtml = renderImages(data.images);
+            const contentHtml = marked.parse(markdownText);
+
+            const citationsHtml = renderCitations(
+                sources,
+                provider,
+                model,
+                latencyMs
+            );
+
+            botMsgDiv.innerHTML = contentHtml + imagesHtml + citationsHtml;
+
+            chatBox.appendChild(botMsgDiv);
+        } catch (error) {
+            console.error("Lỗi gửi tin nhắn:", error);
+
+            typingDiv.remove();
+
+            const errorDiv = document.createElement("div");
+            errorDiv.className = "message bot";
+            errorDiv.style.color = "#dc2626";
+            errorDiv.textContent =
+                "❌ Đã xảy ra lỗi khi kết nối với máy chủ. Vui lòng thử lại sau.";
+
+            chatBox.appendChild(errorDiv);
+        } finally {
+            inputField.disabled = false;
+            sendBtn.disabled = false;
+            inputField.focus();
+
+            scrollToBottom();
+        }
+    }
+</script>
+</body>
+</html>
