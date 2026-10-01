@@ -28,7 +28,7 @@ DATA_DIR = os.getenv("DATA_DIR", "data")
 SIMILARITY_THRESHOLD = float(os.getenv("SIMILARITY_THRESHOLD", "1.0"))
 CHUNK_SIZE = int(os.getenv("CHUNK_SIZE", "300"))
 CHUNK_OVERLAP = int(os.getenv("CHUNK_OVERLAP", "50"))
-TOP_K = int(os.getenv("TOP_K", "5"))
+TOP_K = int(os.getenv("TOP_K", "3"))
 # QUAN TRỌNG: KHÔNG lồng vào DATA_DIR. server.py phục vụ file tĩnh thật sự từ
 # thư mục "static/" ở gốc project (app.mount("/", StaticFiles(directory="static"))),
 # nên manifest.json VÀ toàn bộ ảnh .jpg phải nằm trong "static/images/" — đúng nơi

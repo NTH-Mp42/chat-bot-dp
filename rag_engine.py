@@ -110,41 +110,53 @@ class RAGEngine:
 
     def add_documents(self, docs_text: str, source: str = "unknown") -> int:
         """
-        Chia tài liệu thành chunks và upsert vào ChromaDB.
-        ID ổn định (hash của source + index + nội dung chunk) nên ingest lại nhiều lần
-        không tạo bản ghi trùng — giữ nguyên cải tiến bạn đã làm.
+        Chia tài liệu theo section ## trước, sau đó tiếp tục chia
+        các section quá dài bằng RecursiveCharacterTextSplitter.
         """
-        # Chia dữ liệu theo từng section ## thay vì cắt theo số ký tự
+
+        # 1. Tách theo heading ##
         parts = re.split(r"(?=^## )", docs_text, flags=re.MULTILINE)
 
         chunks = []
 
+        # 2. Với mỗi section, nếu quá dài thì tiếp tục chia nhỏ
         for part in parts:
             part = part.strip()
 
-            if part:
-                chunks.append(part)
-        for i, chunk in enumerate(chunks):
-            if "HIỆU TRƯỞNG" in chunk.upper() or "NGUYỄN TRUNG KIÊN" in chunk.upper():
-                print(f"\n===== CHUNK {i} =====")
-                print(chunk)
-                print("====================")
+            if not part:
+                continue
+
+            sub_chunks = self.text_splitter.split_text(part)
+
+            for chunk in sub_chunks:
+                chunk = chunk.strip()
+                if chunk:
+                    chunks.append(chunk)
+
         documents, ids, metadatas = [], [], []
+
         for idx, chunk in enumerate(chunks):
             raw_id = f"{source}_{idx}_{chunk}"
-            chunk_id = hashlib.sha256(raw_id.encode("utf-8")).hexdigest()[:16]
+            chunk_id = hashlib.sha256(
+                raw_id.encode("utf-8")
+            ).hexdigest()[:16]
 
             documents.append(chunk)
             ids.append(f"doc_{chunk_id}")
-            metadatas.append({"source": source, "chunk_id": idx})
+            metadatas.append({
+                "source": source,
+                "chunk_id": idx
+            })
 
         if documents:
             logger.info(f"Bắt đầu upsert {len(documents)} chunks...")
+
             self.collection.upsert(
                 documents=documents,
                 ids=ids,
                 metadatas=metadatas
             )
+
             logger.info("Upsert hoàn tất.")
 
         return len(chunks)
@@ -220,7 +232,36 @@ class RAGEngine:
         import re
 
         query_lower = query_text.lower()
-
+        # =========================
+        # LỊCH SỬ HIỆU TRƯỞNG
+        # =========================
+        list_teacher_intent = (
+            any(x in query_lower for x in [
+                "toàn bộ giáo viên",
+                "danh sách toàn bộ giáo viên",
+                "liệt kê toàn bộ giáo viên",
+                "tất cả giáo viên",
+                "toàn bộ giáo viên",
+                "danh sách giáo viên",
+                "liệt kê giáo viên",
+                "kể tên giáo viên",
+            ])
+            and any(x in query_lower for x in [
+                "toán", "ngữ văn", "vật lý", "tin", "hóa", "sinh",
+                "sử", "địa", "anh", "thể dục", "gdcd", "gdktt",
+            ])
+        )
+        history_intent = any(
+            phrase in query_lower
+            for phrase in [
+                "hiệu trưởng thứ",
+                "hiệu trưởng đầu",
+                "hiệu trưởng qua các thời kỳ",
+                "các hiệu trưởng qua các thời kỳ",
+                "danh sách hiệu trưởng",
+                "lịch sử hiệu trưởng",
+            ]
+        )
         # Lấy các cụm từ có nghĩa trong câu hỏi.
         # Giữ lại cả cụm từ 2-3 từ vì chúng quan trọng hơn từ đơn.
         words = re.findall(r"\w+", query_lower)
@@ -238,6 +279,92 @@ class RAGEngine:
         query_terms -= stopwords
 
         candidates = []
+
+        for doc, distance, metadata in zip(
+            documents, distances, metadatas
+        ):
+            doc_lower = doc.lower()
+
+            # ==========================================
+            # ƯU TIÊN CHUNK LỊCH SỬ HIỆU TRƯỞNG
+            # ==========================================
+            if history_intent:
+                if (
+                    "hiệu trưởng qua các thời kỳ" in doc_lower
+                    or "hiệu trưởng qua các thời kì" in doc_lower
+                ):
+                    candidates.append({
+                        "doc": doc,
+                        "distance": distance,
+                        "metadata": metadata,
+                        "score": -1000,
+                        "keyword_matches": 999,
+                    })
+                    continue
+            if list_teacher_intent:
+                subject = None
+
+                for s in [
+                    "toán", "ngữ văn", "vật lý", "tin", "hóa học",
+                    "sinh học", "lịch sử", "địa lý", "tiếng anh"
+                ]:
+                    if s in query_lower:
+                        subject = s
+                        break
+
+                if subject:
+                    matched_docs = []
+
+                    for doc in documents:
+                        doc_lower = doc.lower()
+
+                        if subject in doc_lower and "chức vụ: giáo viên" in doc_lower:
+                            matched_docs.append(doc)
+
+                    if matched_docs:
+                        return {
+                            "context": "\n\n".join(matched_docs),
+                            "sources": [],
+                            "distances": [],
+                        }
+            # Đếm số từ khóa thực sự xuất hiện trong document
+            keyword_matches = sum(
+                1
+                for term in query_terms
+                if term in doc_lower
+            )
+
+            phrase_bonus = 0
+
+            important_phrases = set()
+
+            for n in (2, 3, 4):
+                for i in range(len(words) - n + 1):
+                    phrase = " ".join(words[i:i + n])
+
+                    if phrase not in stopwords:
+                        important_phrases.add(phrase)
+
+            for phrase in important_phrases:
+                if phrase in doc_lower:
+                    phrase_bonus += 0.20
+
+            score = (
+                distance
+                - keyword_matches * 0.10
+                - phrase_bonus
+            )
+
+            if score > config.SIMILARITY_THRESHOLD:
+                continue
+
+            candidates.append({
+                "doc": doc,
+                "distance": distance,
+                "metadata": metadata,
+                "score": score,
+                "keyword_matches": keyword_matches,
+            })
 
         for doc, distance, metadata in zip(
             documents, distances, metadatas
