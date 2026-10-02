@@ -1,43 +1,47 @@
 {
   "categories": {
+    "so_do": {
+      "label": "Sơ đồ trường",
+      "order": 1,
+      "aliases": ["bản đồ", "khuôn viên", "sơ đồ"]
+    },
     "ban_giam_hieu": {
       "label": "Ban giám hiệu",
+      "order": 2,
       "aliases": ["ban giám hiệu", "lãnh đạo nhà trường"]
     },
     "clb": {
       "label": "Câu lạc bộ",
+      "order": 3,
       "aliases": ["câu lạc bộ", "clb"]
     },
     "khuon_vien": {
       "label": "Khuôn viên và cơ sở vật chất",
+      "order": 4,
       "aliases": ["khuôn viên", "cơ sở vật chất"]
     }
   },
-  "images": [
-    {
-      "file": "hieu_truong.jpg",
+  "images": {
+    "so_do/so_do.jpg": {
+      "title": "Sơ đồ trường",
+      "aliases": ["bản đồ", "khuôn viên", "sơ đồ"]
+    },
+    "ban_giam_hieu/hieu_truong.jpg": {
       "title": "Thầy Nguyễn Trung Kiên - Hiệu trưởng",
-      "category": "ban_giam_hieu",
       "aliases": ["hiệu trưởng", "nguyễn trung kiên", "thầy kiên"],
       "exclude": ["phó hiệu trưởng"]
     },
-    {
-      "file": "clb_bong_da.jpg",
+    "clb/clb_bong_da.jpg": {
       "title": "Câu lạc bộ Bóng đá",
-      "category": "clb",
-      "aliases": ["clb bóng đá", "câu lạc bộ bóng đá", "đội bóng đá"]
+      "aliases": ["đá bóng", "bóng đá", "đội bóng đá"]
     },
-    {
-      "file": "clb_my_thuat.jpg",
-      "title": "Câu lạc bộ mỹ thuật",
-      "category": "clb",
-      "aliases": ["clb lac", "câu lạc bộ mỹ thuật"]
+    "clb/clb_my_thuat.jpg": {
+      "title": "Câu lạc bộ Mỹ thuật",
+      "aliases": ["clb mỹ thuật", "love art club", "lac"]
     },
-    {
-      "file": "anh_truong.jpg",
+    "khuon_vien/anh_truong.jpg": {
       "title": "Ảnh trường",
-      "category": "khuon_vien",
       "aliases": ["ảnh trường"]
     }
-  ]
+  }
 }

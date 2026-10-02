@@ -22,6 +22,66 @@
         .gallery-section h4 { margin: 14px 0 8px; font-size: 14px; }
         .gallery-section:first-child h4 { margin-top: 0; }
         .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+
+        /* ===== TÀI LIỆU HỌC TẬP ===== */
+        .documents-body {
+            flex: 1;
+            overflow: auto;
+            padding: 18px;
+            background: #f1f5f9;
+        }
+
+        .documents-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+        }
+
+        .document-card {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px;
+            transition: all 0.2s;
+        }
+
+        .document-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+        }
+
+        .document-card h4 {
+            margin: 0 0 6px;
+            font-size: 15px;
+            color: var(--text-main);
+        }
+
+        .document-card p {
+            margin: 0 0 12px;
+            font-size: 12px;
+            line-height: 1.5;
+            color: var(--text-secondary);
+        }
+
+        .document-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            padding: 9px 12px;
+            border-radius: 8px;
+            background: #eff6ff;
+            color: var(--primary-color);
+            border: 1px solid #bfdbfe;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .document-link:hover {
+            background: #dbeafe;
+        }
+
         :root {
             --bg-main: #f8fafc;
             --card-bg: #ffffff;
@@ -411,6 +471,37 @@
         }
 
 
+
+        /* ===== LIGHTBOX: phóng to / thu nhỏ / kéo ảnh ===== */
+        #imgModal .map-modal-title { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        #imgModal .map-controls { flex-shrink: 0; }
+        .zoom-level { min-width: 46px; text-align: center; font-size: 12px; color: var(--text-secondary); }
+        .zoom-viewer {
+            flex: 1;
+            min-height: 0;
+            overflow: hidden;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            touch-action: none;      /* để tự xử lý kéo / chụm ngón */
+            user-select: none;
+            cursor: zoom-in;
+        }
+        .zoom-viewer.zoomed { cursor: grab; }
+        .zoom-viewer.zoomed:active { cursor: grabbing; }
+        .zoom-image {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            transform-origin: center center;
+            will-change: transform;
+            pointer-events: none;
+            -webkit-user-drag: none;
+        }
+
         /* Tối ưu hóa hiển thị trên thiết bị di động nhỏ dưới 480px */
         @media (max-width: 480px) {
             body { background-color: var(--card-bg); }
@@ -436,8 +527,8 @@
         </div>
 
         <div class="tool-row">
-            <button class="map-button" onclick="openMap()">🗺️ Sơ đồ trường</button>
             <button class="map-button" onclick="openGallery()">🖼️ Thư viện ảnh</button>
+            <button class="map-button" onclick="openDocuments()">📚 Tài liệu học tập</button>
         </div>
 
         <!-- Modal thư viện ảnh -->
@@ -453,16 +544,80 @@
             </div>
         </div>
 
-        <!-- Xem 1 ảnh phóng to -->
+        <!-- Modal tài liệu học tập -->
+        <div id="documentsModal" class="map-modal" onclick="if (event.target === this) closeDocuments()">
+            <div class="map-modal-content">
+                <div class="map-modal-header">
+                    <div class="map-modal-title">📚 Tài liệu học tập</div>
+                    <div class="map-controls">
+                        <button class="map-control map-close" onclick="closeDocuments()" title="Đóng">✕</button>
+                    </div>
+                </div>
+
+                <div class="documents-body">
+                    <div class="documents-list">
+                        <div class="document-card">
+                            <h4>🎯 HSA</h4>
+                            <p>Tài liệu ôn thi HSA.</p>
+                            <a class="document-link"
+                               href="https://drive.google.com/drive/folders/1zoycKKhZ4zcamt6gHgr0McQDqyhGsK8R"
+                               target="_blank" rel="noopener noreferrer">
+                                📂 Mở tài liệu HSA
+                            </a>
+                        </div>
+
+                        <div class="document-card">
+                            <h4>🏆 HSG</h4>
+                            <p>Tài liệu ôn thi học sinh giỏi.</p>
+                            <a class="document-link"
+                               href="https://drive.google.com/drive/folders/1vLXmHPJ01UPsvusGaRzx9byFqPVERw1D"
+                               target="_blank" rel="noopener noreferrer">
+                                📂 Mở tài liệu HSG
+                            </a>
+                        </div>
+
+                        <div class="document-card">
+                            <h4>📖 THPT</h4>
+                            <p>Tài liệu học tập THPT.</p>
+                            <a class="document-link"
+                               href="https://drive.google.com/drive/folders/1-qWzBe3F3sF-i5D_8oMtdB1rFd7sE_Il"
+                               target="_blank" rel="noopener noreferrer">
+                                📂 Mở tài liệu THPT
+                            </a>
+                        </div>
+
+                        <div class="document-card">
+                            <h4>🧠 TSA</h4>
+                            <p>Tài liệu ôn thi TSA.</p>
+                            <a class="document-link"
+                               href="https://drive.google.com/drive/folders/1Wnwz2WtHvwG0_GDkjeUOrNGKZfO-mgyr"
+                               target="_blank" rel="noopener noreferrer">
+                                📂 Mở tài liệu TSA
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Xem ảnh phóng to (dùng chung cho chat, thư viện ảnh, sơ đồ trường) -->
         <div id="imgModal" class="map-modal" onclick="if (event.target === this) closeImage()">
             <div class="map-modal-content">
                 <div class="map-modal-header">
                     <div class="map-modal-title" id="imgModalTitle"></div>
                     <div class="map-controls">
+                        <button class="map-control" onclick="zoomImage(1 / 1.25)" title="Thu nhỏ (-)">−</button>
+                        <span class="zoom-level" id="zoomLevel">100%</span>
+                        <button class="map-control" onclick="zoomImage(1.25)" title="Phóng to (+)">+</button>
+                        <button class="map-control" onclick="resetZoom()" title="Vừa khung (0)">↺</button>
+                        <button class="map-control" onclick="downloadImage()" title="Tải ảnh về">⬇</button>
                         <button class="map-control map-close" onclick="closeImage()" title="Đóng">✕</button>
                     </div>
                 </div>
-                <div class="map-viewer"><img id="imgModalImg" class="map-image" src="" alt=""></div>
+                <div class="zoom-viewer" id="zoomViewer">
+                    <img id="imgModalImg" class="zoom-image" src="" alt="" draggable="false">
+                </div>
+                <div class="map-hint">Cuộn chuột hoặc chụm hai ngón để phóng to · kéo để di chuyển · nhấp đúp để phóng nhanh</div>
             </div>
         </div>
 
@@ -470,35 +625,6 @@
             <div class="message bot">Chào bạn! Tôi có thể giúp gì cho bạn về thông tin của nhà trường hôm nay?</div>
         </div>
 
-
-        <!-- Modal sơ đồ trường -->
-        <div id="mapModal" class="map-modal" onclick="handleMapBackdropClick(event)">
-            <div class="map-modal-content">
-                <div class="map-modal-header">
-                    <div class="map-modal-title">🗺️ Sơ đồ trường</div>
-                    <div class="map-controls">
-                        <button class="map-control" onclick="zoomMap(-0.2)" title="Thu nhỏ">−</button>
-                        <button class="map-control" onclick="resetMap()" title="Đặt lại kích thước">↺</button>
-                        <button class="map-control" onclick="zoomMap(0.2)" title="Phóng to">+</button>
-                        <button class="map-control map-download" onclick="downloadMap()" title="Tải ảnh về">⬇ Tải ảnh</button>
-                        <button class="map-control map-close" onclick="closeMap()" title="Đóng">✕</button>
-                    </div>
-                </div>
-
-                <div class="map-viewer" id="mapViewer">
-                    <img
-                        id="schoolMap"
-                        class="map-image"
-                        src="so_do_truong.jpg"
-                        alt="Sơ đồ trường"
-                    >
-                </div>
-
-                <div class="map-hint">
-                    Có thể dùng nút +/− để phóng to, hoặc cuộn để xem chi tiết.
-                </div>
-            </div>
-        </div>
 
         <div class="input-area">
             <input type="text" id="queryInput" placeholder="Nhập câu hỏi của bạn tại đây..." onkeypress="handleKeyPress(event)">
@@ -528,12 +654,124 @@
         if (el) openImage(el.dataset.full, el.alt);
     });
 
+    // ===== LIGHTBOX: phóng to / thu nhỏ / kéo ảnh =====
+    const Z_MIN = 1, Z_MAX = 6;
+    const zoom = { s: 1, x: 0, y: 0 };
+    const activePointers = new Map();
+    let lastPinchDist = 0, lastPinchMid = null;
+    let currentImage = { url: "", title: "" };
+
+    const zoomViewerEl = () => document.getElementById("zoomViewer");
+    const zoomImgEl = () => document.getElementById("imgModalImg");
+
+    // Toạ độ tương đối so với tâm khung xem
+    function viewerPoint(clientX, clientY) {
+        const r = zoomViewerEl().getBoundingClientRect();
+        return { x: clientX - (r.left + r.width / 2), y: clientY - (r.top + r.height / 2) };
+    }
+
+    function applyZoom(animate) {
+        const viewer = zoomViewerEl(), img = zoomImgEl();
+        // Không cho kéo ảnh ra khỏi khung
+        const maxX = Math.max(0, (img.offsetWidth * zoom.s - viewer.clientWidth) / 2);
+        const maxY = Math.max(0, (img.offsetHeight * zoom.s - viewer.clientHeight) / 2);
+        zoom.x = Math.min(maxX, Math.max(-maxX, zoom.x));
+        zoom.y = Math.min(maxY, Math.max(-maxY, zoom.y));
+        img.style.transition = animate ? "transform 0.15s ease" : "none";
+        img.style.transform = `translate(${zoom.x}px, ${zoom.y}px) scale(${zoom.s})`;
+        viewer.classList.toggle("zoomed", zoom.s > 1.001);
+        document.getElementById("zoomLevel").textContent = Math.round(zoom.s * 100) + "%";
+    }
+
+    // Phóng/thu quanh điểm (cx, cy) để điểm đó đứng yên dưới con trỏ
+    function zoomAt(factor, cx = 0, cy = 0, animate = true) {
+        const next = Math.min(Z_MAX, Math.max(Z_MIN, zoom.s * factor));
+        const k = next / zoom.s;
+        zoom.x = cx - k * (cx - zoom.x);
+        zoom.y = cy - k * (cy - zoom.y);
+        zoom.s = next;
+        applyZoom(animate);
+    }
+
+    function zoomImage(factor) { zoomAt(factor); }
+    function resetZoom() { zoom.s = 1; zoom.x = 0; zoom.y = 0; applyZoom(true); }
+
     function openImage(url, title) {
-        document.getElementById("imgModalImg").src = url;
+        const img = zoomImgEl();
+        currentImage = { url, title: title || "" };
+        img.src = url;
+        img.alt = title || "";
         document.getElementById("imgModalTitle").textContent = title || "";
+        zoom.s = 1; zoom.x = 0; zoom.y = 0;
+        applyZoom(false);
         document.getElementById("imgModal").classList.add("active");
     }
     function closeImage() { document.getElementById("imgModal").classList.remove("active"); }
+
+    function downloadImage() {
+        if (!currentImage.url) return;
+        let name = currentImage.url.split("?")[0].split("/").pop() || "anh.jpg";
+        try { name = decodeURIComponent(name); } catch (_) {}
+        const link = document.createElement("a");
+        link.href = currentImage.url;
+        link.download = name;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    }
+
+    (function initZoomGestures() {
+        const viewer = zoomViewerEl();
+
+        // Con lăn chuột / touchpad
+        viewer.addEventListener("wheel", e => {
+            e.preventDefault();
+            const dy = e.deltaMode === 1 ? e.deltaY * 33 : e.deltaY;
+            const p = viewerPoint(e.clientX, e.clientY);
+            zoomAt(Math.exp(-dy * 0.002), p.x, p.y, false);
+        }, { passive: false });
+
+        // Kéo (1 ngón/chuột) và chụm (2 ngón)
+        viewer.addEventListener("pointerdown", e => {
+            viewer.setPointerCapture(e.pointerId);
+            activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+            lastPinchDist = 0;
+        });
+        viewer.addEventListener("pointermove", e => {
+            const prev = activePointers.get(e.pointerId);
+            if (!prev) return;
+            activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+            if (activePointers.size === 1) {
+                if (zoom.s > 1) {
+                    zoom.x += e.clientX - prev.x;
+                    zoom.y += e.clientY - prev.y;
+                    applyZoom(false);
+                }
+            } else if (activePointers.size === 2) {
+                const [a, b] = [...activePointers.values()];
+                const dist = Math.hypot(a.x - b.x, a.y - b.y);
+                const mid = viewerPoint((a.x + b.x) / 2, (a.y + b.y) / 2);
+                if (lastPinchDist && dist) {
+                    zoom.x += mid.x - lastPinchMid.x;
+                    zoom.y += mid.y - lastPinchMid.y;
+                    zoomAt(dist / lastPinchDist, mid.x, mid.y, false);
+                }
+                lastPinchDist = dist;
+                lastPinchMid = mid;
+            }
+        });
+        const endPointer = e => { activePointers.delete(e.pointerId); lastPinchDist = 0; };
+        viewer.addEventListener("pointerup", endPointer);
+        viewer.addEventListener("pointercancel", endPointer);
+
+        // Nhấp đúp: phóng nhanh / quay về vừa khung
+        viewer.addEventListener("dblclick", e => {
+            if (zoom.s > 1.001) resetZoom();
+            else { const p = viewerPoint(e.clientX, e.clientY); zoomAt(2.5, p.x, p.y); }
+        });
+
+        window.addEventListener("resize", () => applyZoom(false));
+    })();
 
     async function openGallery() {
         const body = document.getElementById("galleryBody");
@@ -565,6 +803,17 @@
             body.textContent = `Không tải được thư viện ảnh (${err.message}).`;
         }
     }
+
+    function openDocuments() {
+        document.getElementById("documentsModal").classList.add("active");
+        document.body.style.overflow = "hidden";
+    }
+
+    function closeDocuments() {
+        document.getElementById("documentsModal").classList.remove("active");
+        document.body.style.overflow = "";
+    }
+
     function closeGallery() { document.getElementById("galleryModal").classList.remove("active"); }
     marked.setOptions({ breaks: true });
 
@@ -610,54 +859,18 @@
     }
 
 
-    // ===== SƠ ĐỒ TRƯỜNG =====
-    let mapScale = 1;
-
-    function openMap() {
-        const modal = document.getElementById("mapModal");
-        modal.classList.add("active");
-        document.body.style.overflow = "hidden";
-        resetMap();
-    }
-
-    function closeMap() {
-        const modal = document.getElementById("mapModal");
-        modal.classList.remove("active");
-        document.body.style.overflow = "";
-    }
-
-    function handleMapBackdropClick(event) {
-        if (event.target === document.getElementById("mapModal")) {
-            closeMap();
-        }
-    }
-
-    function zoomMap(amount) {
-        mapScale = Math.min(3, Math.max(0.5, mapScale + amount));
-        document.getElementById("schoolMap").style.transform =
-            `scale(${mapScale})`;
-    }
-
-    function resetMap() {
-        mapScale = 1;
-        const image = document.getElementById("schoolMap");
-        if (image) image.style.transform = "scale(1)";
-    }
-
-    function downloadMap() {
-        const link = document.createElement("a");
-        link.href = "so_do_truong.jpg";
-        link.download = "so_do_truong.jpg";
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-    }
-
     document.addEventListener("keydown", function(event) {
         if (event.key === "Escape") {
-            closeMap();
+            // Đóng lớp trên cùng trước (lightbox nằm trên thư viện ảnh)
+            if (document.getElementById("imgModal").classList.contains("active")) { closeImage(); return; }
             closeGallery();
-            closeImage();
+            closeDocuments();
+            return;
+        }
+        if (document.getElementById("imgModal").classList.contains("active")) {
+            if (event.key === "+" || event.key === "=") zoomImage(1.25);
+            else if (event.key === "-") zoomImage(1 / 1.25);
+            else if (event.key === "0") resetZoom();
         }
     });
 

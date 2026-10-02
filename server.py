@@ -211,6 +211,13 @@ def chat_endpoint(req: ChatRequest):
             "KHÔNG được nói là không có ảnh.\n"
         )
 
+    context = rag_result["context"]
+
+    logger.info(
+        f"RAG context: {len(context):,} chars | "
+        f"TOP_K={config.TOP_K}"
+    )
+
     full_prompt = f"""
     NĂM HIỆN TẠI: {current_year}
 
@@ -222,6 +229,8 @@ def chat_endpoint(req: ChatRequest):
     CÂU HỎI:
     {query}
     """
+
+    logger.info(f"Full prompt: {len(full_prompt):,} chars")
     try:
         result = llm_router.generate(full_prompt, mode="rag")
     except RuntimeError as e:

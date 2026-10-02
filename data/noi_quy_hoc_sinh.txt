@@ -125,7 +125,7 @@ Nội dung:
 Liên quan: TD-TC-01
 
 ### [LICH-01] Giờ vào học, quét mặt khi đến trường và quy định đi muộn
-Nguồn: Quy định của nhà trường về quét mặt và giờ vào học (bổ sung năm học 2025-2026; số văn bản, ngày ban hành: chưa có).
+Nguồn: Quy định của nhà trường về quét mặt và giờ vào học
 Từ khóa: giờ vào học, quét mặt, máy quét mặt, đi muộn, đến muộn, trễ giờ, 7h10, 7h15, 13h25, 13h30, buổi sáng, buổi chiều, bí thư kiểm tra chéo, nhóm chấm nề nếp, báo cáo lỗi, đính chính, gỡ lỗi, trốn tiết, báo trước, xin phép, học tăng cường, lớp tăng cường, trái buổi, chào cờ, thứ hai đầu tuần, xếp hàng.
 Nội dung:
 Học sinh học chính khóa phải quét mặt ở máy khi đến trường, cả buổi sáng và buổi chiều.
@@ -174,7 +174,7 @@ Liên quan: NQ-01, NQ-04 (đồng phục), TD-A-04, TD-A-05, TD-B-05 (vắng ch�
 
 ---
 
-# PHẦN II. QUY ĐỊNH THI ĐUA TẬP THỂ LỚP VÀ GIÁO VIÊN CHỦ NHIỆM NĂM HỌC 2025-2026
+# PHẦN II. QUY ĐỊNH THI ĐUA TẬP THỂ LỚP VÀ GIÁO VIÊN CHỦ NHIỆM 
 
 ### [TD-01] Tổng quan về thi đua khen thưởng tập thể lớp
 Nguồn: Hướng dẫn thi đua khen thưởng tập thể lớp và GVCN, THPT Hoài Đức A, 2025-2026.
@@ -574,7 +574,6 @@ Khi trả lời, chatbot cần nêu rõ những điểm văn bản chưa quy đ�
 4. Xếp loại GVCN: văn bản không nêu rõ trường hợp lớp Xuất sắc nhưng hồ sơ chỉ đạt Khá (không khớp tiêu chí nào một cách trực tiếp).
 5. Xếp loại lớp cả kỳ/năm dùng cả "Chưa đạt" và "Không đạt" cho cùng một mức thấp nhất.
 6. Văn bản không nêu mức tiền thưởng cụ thể, hình thức kỷ luật cá nhân chi tiết, hay mức trừ riêng cho rượu bia, thuốc lá, ma túy, pháo.
-7. Đây là văn bản năm học 2025-2026 (ký ngày 03/09/2025, số văn bản chưa điền); chatbot nên nhắc học sinh đối chiếu với thông báo mới nhất của nhà trường nếu có thay đổi.
-8. Quy định quét mặt và đi muộn (LICH-01): chưa có quy định về số phút muộn để bị tính là trốn tiết, chưa có thời hạn đính chính lỗi trên nhóm chấm nề nếp, chưa nêu cách xét miễn lỗi khi báo trước, và chưa rõ lớp tăng cường trái buổi có bị bắt lỗi nào khác ngoài đồng phục và đi học muộn hay không. Mốc quét mặt buổi chiều (trước 13h25) đang được suy ra từ quy định buổi sáng, cần đối chiếu với nhà trường.
+7 Quy định quét mặt và đi muộn (LICH-01): chưa có quy định về số phút muộn để bị tính là trốn tiết, chưa có thời hạn đính chính lỗi trên nhóm chấm nề nếp, chưa nêu cách xét miễn lỗi khi báo trước, và chưa rõ lớp tăng cường trái buổi có bị bắt lỗi nào khác ngoài đồng phục và đi học muộn hay không. Mốc quét mặt buổi chiều (trước 13h25) đang được suy ra từ quy định buổi sáng, cần đối chiếu với nhà trường.
 Đối với thắc mắc về kết quả chấm điểm cụ thể của lớp mình, chatbot hướng dẫn học sinh phản ánh với Lớp trưởng/Thư ký/Bí thư chi đoàn và giáo viên chủ nhiệm (xem TD-PH-01).
 Liên quan: TD-PH-01, TD-TRA-02
