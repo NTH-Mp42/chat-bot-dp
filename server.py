@@ -33,8 +33,7 @@ NO_INFO_ANSWER = "Xin lỗi, hiện tại tôi chưa có thông tin này trong h
 # Các câu hỏi có thể trả lời trực tiếp bằng LLM,
 # không cần truy xuất dữ liệu trường.
 DIRECT_KEYWORDS = [
-    "xin chào",
-    "chào bạn",
+    "chào",
     "hello",
     "hi",
     "cảm ơn",
@@ -42,8 +41,17 @@ DIRECT_KEYWORDS = [
     "thank you",
     "bạn là ai",
     "bạn có thể làm gì",
-    "2 + 2",
-    "2+2",
+    "bằng bao nhiêu",
+    "pythagore",
+    "định luật",
+    "cách làm bài",
+    "bằng mấy",
+    "làm thế nào",
+    "làm bài",
+    "bằng mấy",
+    "từ mới",
+    "nghĩa",
+    "khai triển",
 ]
 RAG_KEYWORDS = [
     "trường",
