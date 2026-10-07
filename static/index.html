@@ -120,8 +120,8 @@
 
         .chat-container {
             width: 100%;
-            max-width: 480px;
-            height: 85vh; 
+            max-width: 1000px;
+            height: 100vh; 
             max-height: 750px;
             min-height: 450px;
             
@@ -349,6 +349,360 @@
             transform: translateY(-1px);
         }
 
+        /* ===== ADMIN STYLES ===== */
+        /* Admin modal phủ đen, padding = 0 để dashboard tràn full màn hình */
+        #adminDashboardModal {
+            padding: 0 !important;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 2000;
+        }
+
+        .admin-login-modal-content {
+            max-width: 440px;
+            width: 92vw;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+        }
+
+        /* Full-screen dashboard */
+        .admin-dashboard-content {
+            width: 100vw;
+            height: 100dvh;
+            background: #ffffff;
+            border-radius: 0;
+            box-shadow: none;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .admin-body {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+            min-height: 0;
+        }
+
+        /* ---- Sidebar ---- */
+        .admin-sidebar {
+            width: 300px;
+            min-width: 260px;
+            max-width: 360px;
+            border-right: 1px solid var(--border-color);
+            background: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .admin-sidebar-inner {
+            flex: 1;
+            overflow-y: auto;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .admin-sidebar-inner::-webkit-scrollbar { width: 5px; }
+        .admin-sidebar-inner::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+
+        /* ---- Main editor area ---- */
+        .admin-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: #f1f5f9;
+        }
+
+        .admin-editor-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #ffffff;
+            overflow: hidden;
+            margin: 12px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+        }
+
+        .admin-editor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 18px;
+            background: #f8fafc;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 13px;
+            font-weight: 600;
+            flex-shrink: 0;
+            gap: 10px;
+        }
+
+        .admin-editor-filename {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--primary-color);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 340px;
+        }
+
+        /* Editor với line-numbers giả lập */
+        .admin-editor-body {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+            min-height: 0;
+            position: relative;
+        }
+
+        .admin-line-numbers {
+            width: 52px;
+            min-width: 52px;
+            background: #f8fafc;
+            border-right: 1px solid var(--border-color);
+            color: #94a3b8;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.7;
+            padding: 16px 0;
+            text-align: right;
+            user-select: none;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .admin-line-numbers span {
+            display: block;
+            padding-right: 10px;
+            padding-left: 8px;
+            font-size: 12px;
+        }
+
+        .admin-editor-textarea {
+            flex: 1;
+            padding: 16px 18px;
+            border: none;
+            outline: none;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 14.5px;
+            line-height: 1.7;
+            color: #1e293b;
+            resize: none;
+            background: #ffffff;
+            white-space: pre;
+            overflow: auto;
+            tab-size: 4;
+            -moz-tab-size: 4;
+            caret-color: var(--primary-color);
+        }
+
+        .admin-editor-textarea::selection {
+            background: rgba(37, 99, 235, 0.18);
+        }
+
+        .admin-editor-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 18px;
+            background: #f8fafc;
+            border-top: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+
+        .admin-editor-stats {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-family: 'Consolas', monospace;
+        }
+
+        /* Header của toàn bộ admin dashboard */
+        .admin-dashboard-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            height: 58px;
+            min-height: 58px;
+            background: #1e293b;
+            color: #fff;
+            flex-shrink: 0;
+            gap: 12px;
+        }
+
+        .admin-dashboard-header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            min-width: 0;
+        }
+
+        .admin-dashboard-header-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+            white-space: nowrap;
+        }
+
+        .admin-dashboard-header-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .admin-status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 3px 10px;
+            background: rgba(22, 163, 74, 0.25);
+            color: #bbf7d0;
+            border: 1px solid rgba(22, 163, 74, 0.4);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .admin-btn-primary {
+            background: var(--primary-color);
+            color: #ffffff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.15s;
+        }
+        .admin-btn-primary:hover {
+            background: var(--primary-hover);
+        }
+
+        .admin-btn-danger {
+            background: #fee2e2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+            padding: 7px 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .admin-btn-danger:hover {
+            background: #fecaca;
+        }
+
+        .admin-btn-outline {
+            background: #ffffff;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 7px 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .admin-btn-outline:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+
+        .admin-file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: #ffffff;
+            cursor: pointer;
+            transition: all 0.15s;
+            font-size: 13px;
+        }
+        .admin-file-item:hover {
+            border-color: var(--primary-color);
+            background: #eff6ff;
+        }
+        .admin-file-item.active {
+            border-color: var(--primary-color);
+            background: #eff6ff;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .admin-upload-box {
+            border: 2px dashed #cbd5e1;
+            border-radius: 10px;
+            padding: 14px;
+            text-align: center;
+            background: #f8fafc;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .admin-upload-box:hover {
+            border-color: var(--primary-color);
+            background: #eff6ff;
+        }
+
+        .admin-status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            background: #dcfce7;
+            color: #166534;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .admin-toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            padding: 12px 20px;
+            border-radius: 10px;
+            background: #1e293b;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 500;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            z-index: 2000;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.25s ease;
+            pointer-events: none;
+        }
+        .admin-toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .admin-toast.success { background: #16a34a; }
+        .admin-toast.error { background: #dc2626; }
+        .admin-toast.info { background: #2563eb; }
+
+        @media (max-width: 768px) {
+            .admin-body { flex-direction: column; }
+            .admin-sidebar { width: 100%; min-width: unset; max-width: unset; max-height: 220px; border-right: none; border-bottom: 1px solid var(--border-color); }
+            .admin-line-numbers { display: none; }
+            .admin-editor-filename { max-width: 160px; }
+        }
+
         .map-modal {
             display: none;
             position: fixed;
@@ -527,15 +881,16 @@
         </div>
 
         <div class="tool-row">
-            <button class="map-button" onclick="openGallery()">🖼️ Thư viện ảnh</button>
+            <button class="map-button" onclick="openGallery()">🖼️ Thông tin trường THPT Hoài Đức A</button>
             <button class="map-button" onclick="openDocuments()">📚 Tài liệu học tập</button>
+            <button class="map-button" onclick="openAdminModal()">⚙️ Quản trị</button>
         </div>
 
         <!-- Modal thư viện ảnh -->
         <div id="galleryModal" class="map-modal" onclick="if (event.target === this) closeGallery()">
             <div class="map-modal-content">
                 <div class="map-modal-header">
-                    <div class="map-modal-title">🖼️ Thư viện ảnh</div>
+                    <div class="map-modal-title">🖼️ Thông tin trường THPT Hoài Đức A</div>
                     <div class="map-controls">
                         <button class="map-control map-close" onclick="closeGallery()" title="Đóng">✕</button>
                     </div>
@@ -599,6 +954,129 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modal đăng nhập Admin -->
+        <div id="adminLoginModal" class="map-modal" onclick="if (event.target === this) closeAdminLogin()">
+            <div class="admin-login-modal-content">
+                <div class="map-modal-header">
+                    <div class="map-modal-title">🔐 Đăng nhập Quản trị viên</div>
+                    <div class="map-controls">
+                        <button class="map-control map-close" onclick="closeAdminLogin()" title="Đóng">✕</button>
+                    </div>
+                </div>
+                <div style="padding: 24px;">
+                    <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">
+                        Đăng nhập để xem, chỉnh sửa các tệp dữ liệu trong thư mục <code>data/</code>, tải tệp tài liệu mới lên máy chủ và đồng bộ vector cho Chatbot.
+                    </p>
+                    <div id="adminLoginError" style="display:none; padding: 10px 14px; background: #fee2e2; color: #b91c1c; border-radius: 8px; font-size: 13px; margin-bottom: 14px;"></div>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <div>
+                            <label style="font-size: 13px; font-weight: 600; display: block; margin-bottom: 5px;">Tài khoản</label>
+                            <input type="text" id="adminUsername" placeholder="Tài khoản admin (mặc định: admin)..." style="width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 14px; outline: none;">
+                        </div>
+                        <div>
+                            <label style="font-size: 13px; font-weight: 600; display: block; margin-bottom: 5px;">Mật khẩu</label>
+                            <input type="password" id="adminPassword" placeholder="Mật khẩu admin (mặc định: admin123)..." onkeypress="if (event.key === 'Enter') handleAdminLogin()" style="width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 14px; outline: none;">
+                        </div>
+                        <button id="adminLoginSubmitBtn" class="admin-btn-primary" onclick="handleAdminLogin()" style="justify-content: center; padding: 12px; margin-top: 6px; font-size: 14px;">
+                            🔓 Đăng nhập
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Bảng điều khiển Quản trị dữ liệu (Full-screen) -->
+        <div id="adminDashboardModal" class="map-modal">
+            <div class="admin-dashboard-content">
+
+                <!-- Header tối màu nổi bật -->
+                <div class="admin-dashboard-header">
+                    <div class="admin-dashboard-header-left">
+                        <span style="font-size: 20px;">⚙️</span>
+                        <span class="admin-dashboard-header-title">Quản trị dữ liệu Chatbot</span>
+                        <span class="admin-status-badge" id="adminChunksBadge">⚡ Chunks: 0</span>
+                    </div>
+                    <div class="admin-dashboard-header-right">
+                        <button class="admin-btn-outline" onclick="triggerReindex()" style="color:#e2e8f0; border-color:#475569; background:#334155; font-size:13px;" title="Đồng bộ lại vector database">🔄 Đồng bộ RAG</button>
+                        <button class="admin-btn-danger" onclick="handleAdminLogout()" style="font-size:13px;">🚪 Đăng xuất</button>
+                        <button onclick="closeAdminDashboard()" title="Đóng (Esc)" style="width:36px; height:36px; border-radius:8px; border:none; background:#475569; color:#e2e8f0; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.15s;" onmouseover="this.style.background='#dc2626'" onmouseout="this.style.background='#475569'">✕</button>
+                    </div>
+                </div>
+
+                <div class="admin-body">
+                    <!-- Sidebar: Danh sách tệp & Upload -->
+                    <div class="admin-sidebar">
+                        <div class="admin-sidebar-inner">
+                            <!-- Files list -->
+                            <div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                    <h4 style="font-size: 13px; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">📁 Tệp trong data/</h4>
+                                    <span id="adminFilesCount" style="font-size: 12px; background: #e2e8f0; color: #475569; padding: 2px 8px; border-radius: 10px; font-weight: 600;">0</span>
+                                </div>
+                                <div id="adminFilesList" style="display: flex; flex-direction: column; gap: 6px;">
+                                    <div style="font-size:12px; color:#94a3b8; padding: 8px;">Đang tải...</div>
+                                </div>
+                            </div>
+
+                            <!-- Upload box -->
+                            <div style="border-top: 1px solid var(--border-color); padding-top: 14px;">
+                                <h4 style="font-size: 13px; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px;">📤 Tải lên tệp mới</h4>
+                                <div class="admin-upload-box" onclick="document.getElementById('adminFileInput').click()" id="uploadDropZone">
+                                    <input type="file" id="adminFileInput" accept=".txt,.pdf" style="display:none;" onchange="handleAdminFileUpload(event)">
+                                    <div style="font-size: 28px; margin-bottom: 6px;">📄</div>
+                                    <div style="font-size: 13px; font-weight: 700; color: var(--primary-color);">Bấm để chọn tệp</div>
+                                    <div style="font-size: 11px; color: var(--text-secondary); margin-top: 4px;">Hỗ trợ .txt và .pdf</div>
+                                </div>
+                                <div id="uploadStatusText" style="font-size: 12px; margin-top: 8px; text-align: center; color: var(--text-secondary);"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Editor -->
+                    <div class="admin-main">
+                        <div class="admin-editor-wrapper">
+                            <!-- Editor header -->
+                            <div class="admin-editor-header">
+                                <div style="display: flex; align-items: center; gap: 10px; min-width: 0;">
+                                    <span style="font-size:16px;">📝</span>
+                                    <span id="adminCurrentFileName" class="admin-editor-filename">Chưa chọn tệp</span>
+                                    <span id="adminFileMetaInfo" style="font-size: 11px; color: var(--text-secondary); font-weight: 400; white-space: nowrap;"></span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
+                                    <span style="font-size:11px; color:#94a3b8;">Ctrl+S để lưu</span>
+                                    <button id="adminDeleteFileBtn" class="admin-btn-danger" onclick="handleAdminDeleteCurrentFile()" style="display:none; font-size:12px; padding:5px 12px;">🗑️ Xóa</button>
+                                </div>
+                            </div>
+
+                            <!-- Editor body: line numbers + textarea -->
+                            <div class="admin-editor-body">
+                                <div class="admin-line-numbers" id="adminLineNumbers"><span>1</span></div>
+                                <textarea
+                                    id="adminFileContent"
+                                    class="admin-editor-textarea"
+                                    placeholder="Chọn một tệp .txt từ danh sách bên trái để xem và chỉnh sửa..."
+                                    spellcheck="false"
+                                    oninput="updateEditorStats(); syncLineNumbers();"
+                                    onscroll="syncLineNumbersScroll();"
+                                    onkeydown="handleEditorKeydown(event);"
+                                ></textarea>
+                            </div>
+
+                            <!-- Editor footer -->
+                            <div class="admin-editor-actions">
+                                <div class="admin-editor-stats" id="adminEditorStats">0 ký tự · 0 dòng</div>
+                                <button id="adminSaveFileBtn" class="admin-btn-primary" onclick="handleAdminSaveFile()" style="padding: 10px 22px; font-size: 14px;">💾 Lưu và Cập nhật vào Bot</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast thông báo -->
+        <div id="adminToast" class="admin-toast"></div>
+
 
         <!-- Xem ảnh phóng to (dùng chung cho chat, thư viện ảnh, sơ đồ trường) -->
         <div id="imgModal" class="map-modal" onclick="if (event.target === this) closeImage()">
@@ -815,6 +1293,393 @@
     }
 
     function closeGallery() { document.getElementById("galleryModal").classList.remove("active"); }
+
+    /* ===== ADMIN JS LOGIC ===== */
+    let currentSelectedAdminFile = null;
+
+    function showAdminToast(msg, type = 'success') {
+        const toast = document.getElementById('adminToast');
+        if (!toast) return;
+        toast.textContent = msg;
+        toast.className = `admin-toast show ${type}`;
+        setTimeout(() => {
+            toast.className = 'admin-toast';
+        }, 3500);
+    }
+
+    function getAdminToken() {
+        return localStorage.getItem('hda_admin_token') || '';
+    }
+
+    function openAdminModal() {
+        const token = getAdminToken();
+        if (!token) {
+            document.getElementById('adminLoginModal').classList.add('active');
+            document.getElementById('adminUsername').focus();
+        } else {
+            openAdminDashboard();
+        }
+    }
+
+    function closeAdminLogin() {
+        document.getElementById('adminLoginModal').classList.remove('active');
+    }
+
+    function openAdminDashboard() {
+        document.getElementById('adminLoginModal').classList.remove('active');
+        document.getElementById('adminDashboardModal').classList.add('active');
+        loadAdminStatus();
+        loadAdminFiles();
+    }
+
+    function closeAdminDashboard() {
+        document.getElementById('adminDashboardModal').classList.remove('active');
+    }
+
+    async function handleAdminLogin() {
+        const u = document.getElementById('adminUsername').value.trim();
+        const p = document.getElementById('adminPassword').value.trim();
+        const errBox = document.getElementById('adminLoginError');
+        const btn = document.getElementById('adminLoginSubmitBtn');
+        errBox.style.display = 'none';
+
+        if (!u || !p) {
+            errBox.textContent = 'Vui lòng nhập đầy đủ tài khoản và mật khẩu.';
+            errBox.style.display = 'block';
+            return;
+        }
+
+        btn.disabled = true;
+        btn.textContent = 'Đang kiểm tra...';
+        try {
+            const res = await fetch('/api/admin/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username: u, password: p })
+            });
+            const data = await res.json();
+            if (!res.ok) {
+                throw new Error(data.detail || 'Đăng nhập thất bại');
+            }
+            localStorage.setItem('hda_admin_token', data.token);
+            showAdminToast('Đăng nhập quản trị thành công!', 'success');
+            openAdminDashboard();
+        } catch (err) {
+            errBox.textContent = err.message;
+            errBox.style.display = 'block';
+        } finally {
+            btn.disabled = false;
+            btn.textContent = '🔓 Đăng nhập';
+        }
+    }
+
+    async function handleAdminLogout() {
+        const token = getAdminToken();
+        try {
+            await fetch('/api/admin/logout', {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+        } catch (_) {}
+        localStorage.removeItem('hda_admin_token');
+        closeAdminDashboard();
+        showAdminToast('Đã đăng xuất tài khoản quản trị.', 'info');
+    }
+
+    async function loadAdminStatus() {
+        const token = getAdminToken();
+        try {
+            const res = await fetch('/api/admin/status', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (res.status === 401) {
+                localStorage.removeItem('hda_admin_token');
+                closeAdminDashboard();
+                openAdminModal();
+                return;
+            }
+            const data = await res.json();
+            document.getElementById('adminChunksBadge').textContent = `⚡ Chunks: ${data.chunks_loaded || 0}`;
+        } catch (e) {
+            console.error('Lỗi tải status admin:', e);
+        }
+    }
+
+    async function loadAdminFiles() {
+        const token = getAdminToken();
+        const listEl = document.getElementById('adminFilesList');
+        listEl.innerHTML = '<div style="font-size:12px; color:#64748b;">Đang tải danh sách...</div>';
+        try {
+            const res = await fetch('/api/admin/files', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (res.status === 401) {
+                localStorage.removeItem('hda_admin_token');
+                closeAdminDashboard();
+                openAdminModal();
+                return;
+            }
+            const data = await res.json();
+            const files = data.files || [];
+            document.getElementById('adminFilesCount').textContent = `${files.length} tệp`;
+
+            if (files.length === 0) {
+                listEl.innerHTML = '<div style="font-size:12px; color:#64748b;">Chưa có tệp nào trong thư mục data/.</div>';
+                return;
+            }
+
+            listEl.innerHTML = files.map(f => `
+                <div class="admin-file-item ${currentSelectedAdminFile === f.name ? 'active' : ''}" onclick="selectAdminFile('${escapeHtml(f.name)}', ${f.is_editable})">
+                    <div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 220px;">
+                        <div style="font-weight: 600;">${f.extension === '.pdf' ? '📕' : '📄'} ${escapeHtml(f.name)}</div>
+                        <div style="font-size: 11px; color: var(--text-secondary);">${(f.size / 1024).toFixed(1)} KB · ${f.modified}</div>
+                    </div>
+                    ${f.is_editable ? '<span style="font-size: 11px; color: var(--primary-color); font-weight:600;">Sửa</span>' : '<span style="font-size: 11px; color: #94a3b8;">PDF</span>'}
+                </div>
+            `).join('');
+
+            // Nếu chưa chọn tệp nào, tự động chọn tệp đầu tiên
+            if (!currentSelectedAdminFile && files.length > 0) {
+                const firstEditable = files.find(f => f.is_editable) || files[0];
+                selectAdminFile(firstEditable.name, firstEditable.is_editable);
+            }
+        } catch (e) {
+            listEl.innerHTML = `<div style="font-size:12px; color:#dc2626;">Lỗi tải tệp: ${e.message}</div>`;
+        }
+    }
+
+    async function selectAdminFile(fileName, isEditable) {
+        currentSelectedAdminFile = fileName;
+        document.getElementById('adminCurrentFileName').textContent = fileName;
+        const deleteBtn = document.getElementById('adminDeleteFileBtn');
+        const saveBtn = document.getElementById('adminSaveFileBtn');
+        const textarea = document.getElementById('adminFileContent');
+        const metaInfo = document.getElementById('adminFileMetaInfo');
+
+        deleteBtn.style.display = 'inline-flex';
+
+        // Đánh dấu active trong danh sách
+        document.querySelectorAll('.admin-file-item').forEach(el => {
+            if (el.textContent.includes(fileName)) el.classList.add('active');
+            else el.classList.remove('active');
+        });
+
+        if (!isEditable) {
+            textarea.value = `[Tệp định dạng PDF: ${fileName}]\n\nHệ thống đã trích xuất văn bản từ tệp PDF này và nạp vào vector database lúc server khởi động.\nĐể cập nhật nội dung PDF, hãy tải lên tệp PDF mới cùng tên để ghi đè hoặc đổi tên tệp.`;
+            textarea.disabled = true;
+            saveBtn.disabled = true;
+            metaInfo.textContent = 'Chỉ đọc (PDF)';
+            syncLineNumbers();
+            updateEditorStats();
+            return;
+        }
+
+        textarea.disabled = false;
+        saveBtn.disabled = false;
+        metaInfo.textContent = 'Đang tải nội dung...';
+        textarea.value = 'Đang tải nội dung tệp...';
+
+        const token = getAdminToken();
+        try {
+            const res = await fetch(`/api/admin/files/${encodeURIComponent(fileName)}`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.detail || 'Không tải được nội dung');
+            textarea.value = data.content || '';
+            const charCount = (data.content || '').length;
+            metaInfo.textContent = `${charCount.toLocaleString()} ký tự`;
+            syncLineNumbers();
+            updateEditorStats();
+        } catch (e) {
+            textarea.value = `Lỗi tải nội dung: ${e.message}`;
+            metaInfo.textContent = 'Lỗi';
+        }
+    }
+
+    async function handleAdminSaveFile() {
+        if (!currentSelectedAdminFile) {
+            showAdminToast('Vui lòng chọn một tệp để lưu.', 'error');
+            return;
+        }
+        const token = getAdminToken();
+        const saveBtn = document.getElementById('adminSaveFileBtn');
+        const content = document.getElementById('adminFileContent').value;
+
+        saveBtn.disabled = true;
+        saveBtn.textContent = '⏳ Đang lưu & Nạp RAG...';
+
+        try {
+            const res = await fetch(`/api/admin/files/${encodeURIComponent(currentSelectedAdminFile)}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ content })
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.detail || 'Lưu tệp thất bại');
+            showAdminToast(data.message || 'Đã lưu và đồng bộ thành công!', 'success');
+            if (data.chunks_count !== undefined) {
+                document.getElementById('adminChunksBadge').textContent = `⚡ Chunks: ${data.chunks_count}`;
+            }
+            loadAdminFiles();
+        } catch (e) {
+            showAdminToast(`Lỗi: ${e.message}`, 'error');
+        } finally {
+            saveBtn.disabled = false;
+            saveBtn.textContent = '💾 Lưu và Cập nhật vào Bot';
+        }
+    }
+
+    async function handleAdminFileUpload(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const token = getAdminToken();
+        const statusText = document.getElementById('uploadStatusText');
+        statusText.textContent = `Đang tải lên "${file.name}"...`;
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+            const res = await fetch('/api/admin/upload', {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}` },
+                body: formData
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.detail || 'Tải lên thất bại');
+            showAdminToast(data.message || 'Tải lên thành công!', 'success');
+            statusText.textContent = `✅ Đã tải lên "${file.name}"`;
+            currentSelectedAdminFile = file.name;
+            loadAdminFiles();
+            loadAdminStatus();
+        } catch (e) {
+            statusText.textContent = `❌ ${e.message}`;
+            showAdminToast(`Lỗi: ${e.message}`, 'error');
+        } finally {
+            event.target.value = '';
+        }
+    }
+
+    async function handleAdminDeleteCurrentFile() {
+        if (!currentSelectedAdminFile) return;
+        if (!confirm(`Bạn có chắc chắn muốn xóa tệp "${currentSelectedAdminFile}" khỏi hệ thống dữ liệu?`)) {
+            return;
+        }
+        const token = getAdminToken();
+        try {
+            const res = await fetch(`/api/admin/files/${encodeURIComponent(currentSelectedAdminFile)}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.detail || 'Xóa tệp thất bại');
+            showAdminToast(data.message || 'Đã xóa tệp thành công!', 'success');
+            currentSelectedAdminFile = null;
+            document.getElementById('adminCurrentFileName').textContent = 'Chưa chọn tệp';
+            document.getElementById('adminFileContent').value = '';
+            document.getElementById('adminDeleteFileBtn').style.display = 'none';
+            loadAdminFiles();
+            loadAdminStatus();
+        } catch (e) {
+            showAdminToast(`Lỗi: ${e.message}`, 'error');
+        }
+    }
+
+    async function triggerReindex() {
+        const token = getAdminToken();
+        showAdminToast('Đang đồng bộ lại toàn bộ vector database...', 'info');
+        try {
+            const res = await fetch('/api/admin/reindex', {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.detail || 'Đồng bộ thất bại');
+            showAdminToast(`Đã đồng bộ thành công: ${data.stats.chunks || 0} đoạn!`, 'success');
+            document.getElementById('adminChunksBadge').textContent = `⚡ Chunks: ${data.chunks_count || 0}`;
+        } catch (e) {
+            showAdminToast(`Lỗi: ${e.message}`, 'error');
+        }
+    }
+    /* ===== ADMIN EDITOR HELPERS ===== */
+
+    /** Cập nhật thanh thống kê bên dưới editor */
+    function updateEditorStats() {
+        const ta = document.getElementById('adminFileContent');
+        const el = document.getElementById('adminEditorStats');
+        if (!ta || !el) return;
+        const chars = ta.value.length;
+        const lines = ta.value === '' ? 0 : ta.value.split('\n').length;
+        el.textContent = `${chars.toLocaleString()} ký tự · ${lines.toLocaleString()} dòng`;
+    }
+
+    /** Vẽ số thứ tự dòng trong sidebar */
+    function syncLineNumbers() {
+        const ta = document.getElementById('adminFileContent');
+        const lnEl = document.getElementById('adminLineNumbers');
+        if (!ta || !lnEl) return;
+        const lineCount = ta.value === '' ? 1 : ta.value.split('\n').length;
+        // Chỉ cập nhật khi số dòng thay đổi để tránh reflow không cần
+        const current = lnEl.children.length;
+        if (current === lineCount) return;
+        if (lineCount > current) {
+            const frag = document.createDocumentFragment();
+            for (let i = current + 1; i <= lineCount; i++) {
+                const s = document.createElement('span');
+                s.textContent = i;
+                frag.appendChild(s);
+            }
+            lnEl.appendChild(frag);
+        } else {
+            while (lnEl.children.length > lineCount) {
+                lnEl.removeChild(lnEl.lastChild);
+            }
+        }
+    }
+
+    /** Đồng bộ cuộn giữa line numbers và textarea */
+    function syncLineNumbersScroll() {
+        const ta = document.getElementById('adminFileContent');
+        const lnEl = document.getElementById('adminLineNumbers');
+        if (ta && lnEl) lnEl.scrollTop = ta.scrollTop;
+    }
+
+    /** Xử lý phím tắt trong editor */
+    function handleEditorKeydown(e) {
+        // Ctrl+S / Cmd+S → Lưu file
+        if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+            e.preventDefault();
+            handleAdminSaveFile();
+            return;
+        }
+        // Tab → indent 4 khoảng (không mất focus)
+        if (e.key === 'Tab') {
+            e.preventDefault();
+            const ta = e.target;
+            const start = ta.selectionStart;
+            const end = ta.selectionEnd;
+            ta.value = ta.value.substring(0, start) + '    ' + ta.value.substring(end);
+            ta.selectionStart = ta.selectionEnd = start + 4;
+            updateEditorStats();
+            return;
+        }
+    }
+
+    /** Phím Escape đóng dashboard */
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            const dash = document.getElementById('adminDashboardModal');
+            if (dash && dash.classList.contains('active')) {
+                closeAdminDashboard();
+            }
+        }
+    });
+
     marked.setOptions({ breaks: true });
 
     function handleKeyPress(event) {

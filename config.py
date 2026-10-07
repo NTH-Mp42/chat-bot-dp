@@ -18,6 +18,13 @@ GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 PROVIDER_ORDER = [p.strip() for p in os.getenv("PROVIDER_ORDER", "gemini,groq").split(",") if p.strip()]
 
 # =========================
+# ADMIN AUTH
+# =========================
+ADMIN_USERNAME = os.getenv("ADMIN_USERNAME", "admin")
+ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "admin123")
+ADMIN_SECRET_KEY = os.getenv("ADMIN_SECRET_KEY", "hda_admin_secret_2026")
+
+# =========================
 # RAG
 # =========================
 # Không dùng DB_PATH nữa: ChromaDB chạy in-memory (EphemeralClient) và được build lại

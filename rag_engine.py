@@ -161,10 +161,17 @@ class RAGEngine:
 
         return len(chunks)
 
-    def ingest_directory(self, data_dir: str = None) -> dict:
+    def ingest_directory(self, data_dir: str = None, rebuild: bool = False) -> dict:
         """Nạp toàn bộ .txt/.pdf trong thư mục. Gọi lúc server startup và từ load_data.py."""
         data_dir = data_dir or config.DATA_DIR
         stats = {"files": 0, "chunks": 0, "skipped": []}
+
+        if rebuild:
+            try:
+                self.chroma_client.delete_collection(name=config.COLLECTION_NAME)
+            except Exception:
+                pass
+            self.collection = self.chroma_client.get_or_create_collection(name=config.COLLECTION_NAME)
 
         if not os.path.isdir(data_dir):
             logger.warning(f"Thư mục dữ liệu không tồn tại: {data_dir}")
@@ -355,70 +362,6 @@ class RAGEngine:
                 - phrase_bonus
             )
 
-            if score > config.SIMILARITY_THRESHOLD:
-                continue
-
-            candidates.append({
-                "doc": doc,
-                "distance": distance,
-                "metadata": metadata,
-                "score": score,
-                "keyword_matches": keyword_matches,
-            })
-
-        for doc, distance, metadata in zip(
-            documents, distances, metadatas
-        ):
-            doc_lower = doc.lower()
-
-            # Đếm số từ khóa thực sự xuất hiện trong document
-            keyword_matches = sum(
-                1
-                for term in query_terms
-                if term in doc_lower
-            )
-
-            # Bonus mạnh hơn nếu toàn bộ một cụm quan trọng xuất hiện
-            phrase_bonus = 0
-
-            # Sinh MỌI cụm liền kề 2-4 từ (sliding window) từ danh sách từ gốc,
-            # thay vì chỉ bắt 1 cụm dài nhất không chồng lấn như bản trước.
-            # Cách cũ dùng re.findall không chồng lấn có thể "nuốt" luôn stopword
-            # phía sau (vd query "Nguyễn Thu Hiền là ai" -> chỉ trích được cụm
-            # "nguyễn thu hiền là", KHÔNG BAO GIỜ khớp chính xác với "nguyễn thu
-            # hiền" trong tài liệu) -> tên người bị hỏi không được cộng bonus dù
-            # khớp 100%. Sliding window đảm bảo cụm tên đúng (không dính thêm
-            # "là"/"ai") luôn được thử.
-            important_phrases = set()
-            for n in (2, 3, 4):
-                for i in range(len(words) - n + 1):
-                    phrase = " ".join(words[i:i + n])
-                    if phrase not in stopwords:
-                        important_phrases.add(phrase)
-
-            for phrase in important_phrases:
-                if phrase in doc_lower:
-                    phrase_bonus += 0.20
-
-            # Keyword càng khớp -> score càng thấp -> ưu tiên
-            score = (
-                distance
-                - keyword_matches * 0.10
-                - phrase_bonus
-            )
-
-            # QUAN TRỌNG: lọc theo SCORE (đã cộng bonus khớp từ khóa/cụm từ),
-            # KHÔNG lọc theo distance thô như bản trước.
-            # Lý do (đã xác nhận bằng log thực tế của người dùng): bản trước
-            # loại chunk NGAY khi distance thô > threshold, TRƯỚC KHI biết
-            # chunk đó có khớp tên/cụm từ chính xác hay không. Hệ quả: câu hỏi
-            # "Nguyễn Thu Hiền là ai" bị loại đúng chunk Tiếng Anh chứa tên cô
-            # (distance thô hơi cao) và trả về nhầm chunk Toán/Ngữ văn (distance
-            # thấp hơn nhưng không liên quan) — dù tên khớp 100% trong text.
-            # Cho phép keyword/phrase bonus "cứu" ứng viên trước khi áp
-            # threshold giải quyết đúng lỗi này, mà không nới lỏng threshold
-            # cho các chunk hoàn toàn không khớp từ khóa nào (score của chúng
-            # không đổi vì bonus = 0).
             if score > config.SIMILARITY_THRESHOLD:
                 continue
 
