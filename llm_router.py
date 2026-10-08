@@ -32,7 +32,6 @@ Với câu hỏi bài tập:
 - Trực tiếp giải bài và đưa ra đáp án.
 - Có thể sử dụng công thức, phép tính và các bước giải cần thiết.
 - Trình bày bằng văn bản và Markdown thông thường, nếu có các công thức cần kí tự đặc biệt, đặt $$ ở hai đầu công thức.
-- Không tạo JSON, HTML, widget, thẻ giao diện hoặc mã chương trình nếu người dùng không yêu cầu.
 - Không thêm lời giải thích không liên quan.
 - Nếu bài toán có đáp án số, luôn nêu kết quả cuối cùng rõ ràng.
 
